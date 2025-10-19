@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Detected Text</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
+
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background: radial-gradient(circle at top, #050505, #000000 90%);
+      color: #00fff2;
+      text-align: center;
+      margin: 0;
+      padding-top: 60px;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: linear-gradient(90deg, rgba(0,255,255,0.05) 1px, transparent 1px),
+                        linear-gradient(rgba(0,255,255,0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+      z-index: -1;
+      animation: gridshift 12s linear infinite;
+    }
+
+    @keyframes gridshift {
+      from { background-position: 0 0, 0 0; }
+      to { background-position: 100px 100px, 100px 100px; }
+    }
+
+    h1 {
+      color: #00fff2;
+      text-shadow: 0 0 25px #00fff2;
+      font-size: 2.4em;
+      margin-bottom: 30px;
+    }
+
+    img, audio {
+      margin: 25px auto;
+      border-radius: 10px;
+      border: 1px solid rgba(0,255,255,0.3);
+      box-shadow: 0 0 25px rgba(0,255,255,0.2);
+    }
+
+    .text-box {
+      background: rgba(0,255,255,0.06);
+      border: 1px solid rgba(0,255,255,0.3);
+      border-radius: 15px;
+      padding: 30px;
+      display: inline-block;
+      box-shadow: 0 0 20px rgba(0,255,255,0.2);
+      margin-bottom: 40px;
+      width: 60%;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .text-box:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 35px rgba(0,255,255,0.4);
+    }
+
+    .text-box h3 {
+      color: #ffffff;
+      text-shadow: 0 0 10px #00fff2;
+      font-size: 1.2em;
+      line-height: 1.6;
+      word-wrap: break-word;
+    }
+
+    .btn {
+      background: linear-gradient(90deg, #00fff2, #005bff);
+      color: #000;
+      font-weight: bold;
+      padding: 14px 30px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1em;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px #00fff2;
+    }
+
+    .btn:hover {
+      background: linear-gradient(90deg, #005bff, #00fff2);
+      box-shadow: 0 0 25px #00fff2, 0 0 60px #005bff;
+      transform: scale(1.05);
+    }
+
+    footer {
+      margin-top: 60px;
+      font-size: 0.9em;
+      color: rgba(0,255,255,0.6);
+    }
+  </style>
+</head>
+<body>
+  <h1>Text Detected from {{ 'Image' if mode=='image' else 'Voice' }}</h1>
+
+  {% if mode == 'image' %}
+    <img src="{{ url_for('static', filename='uploads/' + file) }}" width="400"><br><br>
+  {% else %}
+    <audio controls>
+      <source src="{{ url_for('static', filename='uploads/' + file) }}" type="audio/wav">
+      Your browser does not support audio playback.
+    </audio><br><br>
+  {% endif %}
+
+  <div class="text-box">
+    <h3>{{ text }}</h3>
+  </div>
+
+  <form action="/analyze" method="post">
+    <input type="hidden" name="text" value="{{ text }}">
+    <input type="hidden" name="file" value="{{ file }}">
+    <input type="hidden" name="mode" value="{{ mode }}">
+    <button class="btn" type="submit">Analyze Toxicity</button>
+  </form>
+
+  <footer>Powered by AI Text Analyzer | © 2025</footer>
+</body>
+</html>

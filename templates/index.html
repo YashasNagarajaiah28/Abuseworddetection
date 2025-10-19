@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Abuse Detection Portal</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: radial-gradient(circle at top, #0a0a0a, #000000 90%);
+      color: #00fff2;
+      overflow-x: hidden;
+      height: 100vh;
+    }
+
+    /* Animated grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: linear-gradient(90deg, rgba(0,255,255,0.05) 1px, transparent 1px),
+                        linear-gradient(rgba(0,255,255,0.05) 1px, transparent 1px);
+      background-size: 50px 50px;
+      z-index: -1;
+      animation: moveGrid 10s linear infinite;
+    }
+
+    @keyframes moveGrid {
+      from { background-position: 0 0, 0 0; }
+      to { background-position: 100px 100px, 100px 100px; }
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.8em;
+      letter-spacing: 2px;
+      text-shadow: 0 0 20px #00fff2;
+      margin-top: 80px;
+    }
+
+    h3 {
+      margin-top: 60px;
+      color: #ffffff;
+      text-shadow: 0 0 10px #00fff2;
+    }
+
+    .form-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 40px;
+    }
+
+    form {
+      background: rgba(0, 255, 255, 0.05);
+      padding: 25px;
+      border: 1px solid rgba(0, 255, 255, 0.3);
+      border-radius: 12px;
+      width: 320px;
+      margin: 20px auto;
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.1);
+      transition: all 0.3s ease-in-out;
+    }
+
+    form:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 40px rgba(0, 255, 255, 0.3);
+    }
+
+    input[type="file"] {
+      background-color: #021f1f;
+      border: 1px solid #00fff2;
+      border-radius: 8px;
+      color: #00fff2;
+      padding: 10px;
+      width: 90%;
+      margin-bottom: 15px;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .btn {
+      background: linear-gradient(90deg, #00fff2, #005bff);
+      color: #000;
+      font-weight: bold;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1em;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      width: 100%;
+      font-family: 'Orbitron', sans-serif;
+      box-shadow: 0 0 15px #00fff2;
+    }
+
+    .btn:hover {
+      background: linear-gradient(90deg, #005bff, #00fff2);
+      box-shadow: 0 0 25px #00fff2, 0 0 60px #005bff;
+      transform: scale(1.05);
+    }
+
+    footer {
+      position: fixed;
+      bottom: 15px;
+      width: 100%;
+      text-align: center;
+      font-size: 0.9em;
+      color: rgba(0,255,255,0.6);
+    }
+
+    .glow-border {
+      width: 200px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #00fff2, transparent);
+      margin: 30px auto;
+      box-shadow: 0 0 20px #00fff2;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Abuse Detection Portal</h1>
+  <div class="glow-border"></div>
+
+  <div class="form-container">
+    <h3>Upload Car Image</h3>
+    <form action="/upload_image" method="post" enctype="multipart/form-data">
+      <input type="file" name="image" accept="image/*" required>
+      <button class="btn" type="submit">Upload Image</button>
+    </form>
+
+    <h3>Upload Voice Recording</h3>
+    <h4>only wav file</h4>
+    <form action="/upload_audio" method="post" enctype="multipart/form-data">
+      <input type="file" name="audio" accept="audio/*" required>
+      <button class="btn" type="submit">Upload Audio</button>
+    </form>
+  </div>
+
+  <footer>
+    2025 | Developed by Yashas Nagarajaiah
+  </footer>
+
+</body>
+</html>
+

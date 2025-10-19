@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Toxicity Analysis Result</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
+
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background: radial-gradient(circle at top, #050505, #000000 90%);
+      color: #00fff2;
+      text-align: center;
+      margin: 0;
+      padding: 40px 0;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: linear-gradient(90deg, rgba(0,255,255,0.05) 1px, transparent 1px),
+                        linear-gradient(rgba(0,255,255,0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+      z-index: -1;
+      animation: gridmove 12s linear infinite;
+    }
+
+    @keyframes gridmove {
+      from { background-position: 0 0, 0 0; }
+      to { background-position: 100px 100px, 100px 100px; }
+    }
+
+    h1 {
+      color: #00fff2;
+      text-shadow: 0 0 20px #00fff2;
+      font-size: 2.6em;
+      margin-top: 40px;
+    }
+
+    img, audio {
+      margin: 30px auto;
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(0,255,255,0.2);
+      border: 1px solid rgba(0,255,255,0.2);
+    }
+
+    .result {
+      background: rgba(0,255,255,0.06);
+      border: 1px solid rgba(0,255,255,0.3);
+      box-shadow: 0 0 25px rgba(0,255,255,0.2);
+      padding: 30px 40px;
+      border-radius: 15px;
+      display: inline-block;
+      width: 60%;
+      margin-top: 20px;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .result:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 40px rgba(0,255,255,0.4);
+    }
+
+    .result h3 {
+      color: #fff;
+      margin: 15px 0;
+      text-shadow: 0 0 10px #00fff2;
+    }
+
+    .toxic {
+      color: #ff0044;
+      text-shadow: 0 0 15px #ff0044;
+      animation: blink 1.5s infinite;
+    }
+
+    .clean {
+      color: #00ff88;
+      text-shadow: 0 0 15px #00ff88;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+
+    a {
+      color: #00fff2;
+      display: inline-block;
+      margin-top: 40px;
+      text-decoration: none;
+      font-weight: bold;
+      border: 1px solid #00fff2;
+      padding: 10px 18px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(0,255,255,0.2);
+    }
+
+    a:hover {
+      background: #00fff2;
+      color: #000;
+      box-shadow: 0 0 25px #00fff2;
+      transform: scale(1.05);
+    }
+
+    footer {
+      margin-top: 50px;
+      font-size: 0.9em;
+      color: rgba(0,255,255,0.6);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Toxicity Analysis Result</h1>
+
+  {% if mode == 'image' %}
+    <img src="{{ url_for('static', filename='uploads/' + file) }}" width="400"><br><br>
+  {% else %}
+    <audio controls>
+      <source src="{{ url_for('static', filename='uploads/' + file) }}" type="audio/wav">
+      Your browser does not support audio playback.
+    </audio><br><br>
+  {% endif %}
+
+  <div class="result">
+    <h3>Text: {{ text }}</h3>
+    <h3>Label: {{ label }} (Confidence: {{ score }})</h3>
+    <h2 class="{{ 'toxic' if is_abusive else 'clean' }}">
+      {{ 'Abusive Content Detected' if is_abusive else 'Clean Content' }}
+    </h2>
+  </div>
+
+  <br><a href="/">⬅ Return to Home</a>
+
+  <footer> v1.0 | 2025</footer>
+</body>
+</html>
+
