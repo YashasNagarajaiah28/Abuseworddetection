@@ -108,6 +108,7 @@ def analyze():
 
     return render_template('result.html', file=file, mode=mode, text=text, label=label, score=round(score, 2), is_abusive=is_abusive)
 
-if __name__ == '__main__':
-    os.makedirs('static/uploads', exist_ok=True)
-    app.run(debug=True)
+if __name__ == "__main__":
+    import os
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
