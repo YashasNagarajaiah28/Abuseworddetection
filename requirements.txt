@@ -1,16 +1,29 @@
+# --- Web Framework ---
+flask>=3.0.0
 
-flask==3.1.0
-easyocr==1.7.1
-ultralytics==8.0.230
-torch==2.0.1
-torchvision==0.15.2
-pillow==9.5.0
-opencv-python-headless==4.8.1.78
-numpy==1.24.4
-transformers==4.31.0
-sentencepiece==0.1.99
-pydub==0.25.1
-SpeechRecognition==3.10.3
+# --- Deep Learning / NLP ---
+torch>=2.5.0
+transformers>=4.41.0
+sentencepiece>=0.1.99
+
+# --- Computer Vision (YOLO + OCR) ---
+ultralytics>=8.0.100         # YOLOv8
+opencv-python-headless>=4.9.0.80
+pillow>=10.0.0
+easyocr>=1.7.1
+numpy>=1.24.0
+
+# --- Speech to Text ---
+SpeechRecognition>=3.10.0
+pydub>=0.25.1
+sounddevice>=0.4.6
+scipy>=1.11.0
+
+# --- Utility ---
+python-dotenv>=1.0.0
+
+
+
 
 
 
